@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list/product.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,11 +30,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  final List<Product> _products = [];
 
-  void _incrementCounter() {
+  void _addProduct() {
     setState(() {
-      _counter++;
+      Product product = Product(name: 'Product ${_products.length + 1}');
+      _products.add(product);
     });
   }
 
@@ -44,21 +46,16 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(8),
+        itemCount: _products.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(title: Text(_products[index].name));
+        }
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: _addProduct,
+        tooltip: 'Add',
         child: const Icon(Icons.add),
       ),
     );
