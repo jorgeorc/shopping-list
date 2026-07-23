@@ -39,6 +39,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _removeProduct(int index) {
+    setState(() {
+      _products.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +56,13 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.all(8),
         itemCount: _products.length,
         itemBuilder: (BuildContext context, int index) {
-          return ListTile(title: Text(_products[index].name));
+          return ListTile(
+            title: Text(_products[index].name),
+            trailing: IconButton(
+              onPressed: () => _removeProduct(index),
+              icon: const Icon(Icons.delete),
+            ),
+          );
         }
       ),
       floatingActionButton: FloatingActionButton(
